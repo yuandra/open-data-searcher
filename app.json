@@ -1,0 +1,8 @@
+{
+  "name": "Open Data Searcher",
+  "description": "A lightweight open data searcher web app using Play & Scala",
+  "repository": "https://github.com/yuandra/open-data-searcher",
+  "addons": [],
+  "success_url": "/",
+  "keywords": ["play", "scala"]
+}

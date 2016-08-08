@@ -1,0 +1,41 @@
+@import b4.vertical.fieldConstructor  // Declares a vertical field constructor as default
+@import model.{FormSearchGeneral,OpenDataPortal}
+
+@(pFormSearchGeneral:Form[FormSearchGeneral],pListOpenDataPortal:List[OpenDataPortal])(implicit messages:Messages)
+
+@main("Pencari Portal Open Data Indonesia") {
+
+    <div class="container">
+
+        <div class="starter-template">
+            <h1>Selamat datang di mesin pencari portal open data</h1>
+
+            <p class="lead">
+
+            @b4.form(routes.Application.search) {
+                @b4.text( pFormSearchGeneral("searchTerm"), '_hiddenLabel  -> "Kata Kunci", 'placeholder -> "ekonomi" )
+                @b4.submit('class -> "btn btn-lg btn-secondary"){ Cari Data}
+            }
+
+            </p>
+
+            <p class="lead">Saat ini mesin ini dapat mencari portal data berikut :
+                @for((tOpenDataPortal,tIndex) <- pListOpenDataPortal.zipWithIndex) {
+
+                    @if(tIndex == pListOpenDataPortal.size-1){
+                        dan
+                    }
+
+                    <a href="@tOpenDataPortal.url">@tOpenDataPortal.name</a>
+
+                    @if(tIndex < pListOpenDataPortal.size-1) {
+                        ,
+
+                    }
+                }
+            </p>
+        </div>
+
+    </div>
+
+}

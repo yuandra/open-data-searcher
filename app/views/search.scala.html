@@ -1,0 +1,83 @@
+@import b4.vertical.fieldConstructor  // Declares a vertical field constructor as default
+@import eu.trentorise.opendata.jackan.model.{CkanDataset, CkanResource}
+@import model.{FormSearchGeneral,SearchResult}
+@import play.api.libs.json.JsValue
+@(pFormSearchGeneral:Form[FormSearchGeneral],pSearchResult:List[SearchResult],pSearchResultJSON:JsValue)(implicit messages:Messages)
+
+@main("Pencari Portal Data") {
+
+    <script src="@routes.Assets.at("javascripts/main.js")"></script>
+
+
+  <div class="container-fluid">
+
+    <h2>Cari Data Anda</h2>
+
+    <p class="lead">
+
+    @b4.form(routes.Application.search) {
+      @b4.text( pFormSearchGeneral("searchTerm"), '_hiddenLabel  -> "Kata Kunci", 'placeholder -> "ekonomi" )
+      @b4.submit('class -> "btn btn-lg btn-secondary"){ Cari Data}
+    }
+
+    </p>
+
+      <h2>Hasil Pencarian</h2>
+
+      <div class="table-responsive">
+
+
+          <table class="table table-striped">
+
+              <tbody>
+                  <tr>
+                      @for(tSearchResult <- pSearchResult) {
+                          <td>
+                              <a href="#" param="result-@tSearchResult.dataPortal.name.replace(' ','-')" class="href-button-dataportal">@tSearchResult.dataPortal.name (@tSearchResult.searchNo)</a>
+                          </td>
+                      }
+
+                      <td>
+                          <a href="#" class="href-button-exportcsv" param="@pSearchResultJSON.toString()">Export CSV</a>
+                      </td>
+                  </tr>
+                </tbody>
+          </table>
+
+          @for(tSearchResult <- pSearchResult) {
+
+              <div id="result-@tSearchResult.dataPortal.name.replace(' ','-')" class="search-result">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th>Hasil Pencarian : <a href="@tSearchResult.dataPortal.url">@tSearchResult.dataPortal.name</a> </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          @for(tDataSet <- tSearchResult.searchList) {
+                              <tr>
+                                  <td>
+                                      <p>
+                                          <b>@tDataSet.getTitle</b> <br/> <br/>
+                                          @Html(HtmlFormat.escape(tDataSet.getNotes).toString.replace("\n", "<br />")) <br/> <br/>
+                                          <b>Format :</b> @tDataSet.getResources.head.getFormat | <b>Lisensi :</b> <a href="@tDataSet.getLicenseUrl">@tDataSet.getLicenseId</a> <br/>
+                                          <b>Link :</b> <a href="@tDataSet.getResources.head.getUrl">@tDataSet.getResources.head.getUrl</a>
+                                      </p>
+                                  </td>
+                              </tr>
+                          }
+
+
+
+                      </tbody>
+                  </table>
+              </div>
+          }
+
+      </div>
+  </div>
+
+
+
+}
