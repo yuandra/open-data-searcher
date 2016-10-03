@@ -1,6 +1,6 @@
 name := "OpenDataSearcher"
 
-version := "1.0"
+version := "0.0.2"
 
 lazy val `opendatasearcher` = (project in file(".")).enablePlugins(PlayScala)
 
@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   specs2 % Test ,
   "eu.trentorise.opendata" % "jackan" % "0.4.2" ,
   "org.webjars" %% "webjars-play" % "2.5.0" ,
-  "com.adrianhurt" %% "play-bootstrap" % "1.1-P25-B4-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap" % "1.1-P25-B4",
   "com.github.tototoshi" %% "scala-csv" % "1.3.3"
 )
 

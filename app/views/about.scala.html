@@ -1,17 +1,20 @@
-@(implicit messages:Messages)
+@import helpers.ConfigHelper
+@(pConfigHelper:ConfigHelper)(implicit messages:Messages)
 
-@main("Pencari Portal Open Data Indonesia") {
+  @main(pConfigHelper.getTranslation("main.title"),pConfigHelper) {
 
   <div class="container">
 
     <div class="starter-template">
-      <h1>Pencari Portal Open Data Indonesia</h1>
+      <h1>@pConfigHelper.getTranslation("about.header")</h1>
 
       <p class="lead">
-        Mesin pencari ini adalah mesin pencari sederhana untuk mencari sebuah data pada portal open data Indoensia.
+      @Html(pConfigHelper.getTranslation("about.text"))</p>
+      <img src='@routes.Assets.at("images/logo_scoda.png")'/>
+      <br/>
+      <p class="lead">
+        @Html(pConfigHelper.getTranslation("about.github"))
       </p>
-
-      <p class="lead">Mesin pencari ini dibuat dengan didukung oleh program member support School of Data <br/> <img src="@routes.Assets.at("images/logo_scoda.png")"/> </p>
     </div>
 
   </div>

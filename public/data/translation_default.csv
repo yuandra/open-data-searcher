@@ -1,0 +1,28 @@
+Key,en
+main.title,Open Data Portal Searcher
+menu.main,Open Data Portal Searcher
+menu.about,About
+main.heading,Welcome to the open data portal searcher
+main.description,This tool can now search these open data portals
+search.placeholder.keyword,Put your search term in here. Example : economy
+search.label.keyword,Keywords
+search.button.submit,Search Data
+about.header,Open Data Portal Searcher
+about.text,This tool is a proof-of-concept search engine for open data portals in Indonesia. This tool is created with the support of School of Data Member Support Program
+result.header,Find Your Data
+result.subheader,Search Result
+result.csv,Export CSV
+result.format,Format
+result.license,License
+result.link,Link
+config.header,Open data portal searcher configuration
+config.label.dataportal,Data Portal Sheet ID (put 0 if first sheet)
+config.label.config,Config Sheet ID
+config.label.translation,Translation Sheet ID
+config.label.base,Sheet URL
+config.placeholder.base,URL Sheet URL
+config.placeholder.dataportal,ID Sheet Data Portal (put 0 if first sheet)
+config.placeholder.config,ID Sheet Config
+config.placeholder.translation,ID Sheet Translation
+config.button.submit,Submit
+config.example,Example config file : <br/> https://docs.google.com/spreadsheets/d/1zNaURLb8kMeia0T5ywGPPAfrvQuaq6qgGpX1VNdzBGE/export?format=csv

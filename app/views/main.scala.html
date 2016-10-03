@@ -1,4 +1,5 @@
-@(title: String)(content: Html)
+@import helpers.ConfigHelper
+@(pTitle: String, pConfigHelper:ConfigHelper)(content: Html)
 
 <!DOCTYPE html>
 
@@ -18,17 +19,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
 
-            <title>@title</title>
+            <title>@pTitle</title>
 
     </head>
 
     <body>
 
         <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-            <a class="navbar-brand" href="/">Pencari Portal Open Data Indonesia</a>
+            <a class="navbar-brand" href="/">@pConfigHelper.getTranslation("menu.main")</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">Tentang</a>
+                    <a class="nav-link" href="/about">@pConfigHelper.getTranslation("menu.about")</a>
                 </li>
             </ul>
         </nav>

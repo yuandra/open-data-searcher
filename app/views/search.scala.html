@@ -2,27 +2,28 @@
 @import eu.trentorise.opendata.jackan.model.{CkanDataset, CkanResource}
 @import model.{FormSearchGeneral,SearchResult}
 @import play.api.libs.json.JsValue
-@(pFormSearchGeneral:Form[FormSearchGeneral],pSearchResult:List[SearchResult],pSearchResultJSON:JsValue)(implicit messages:Messages)
+@import helpers.ConfigHelper
+@(pFormSearchGeneral:Form[FormSearchGeneral],pSearchResult:List[SearchResult],pSearchResultJSON:JsValue,pConfigHelper:ConfigHelper)(implicit messages:Messages)
 
-@main("Pencari Portal Data") {
+@main(pConfigHelper.getTranslation("main.title"),pConfigHelper) {
 
     <script src="@routes.Assets.at("javascripts/main.js")"></script>
 
 
   <div class="container-fluid">
 
-    <h2>Cari Data Anda</h2>
+    <h2>@pConfigHelper.getTranslation("result.header")</h2>
 
     <p class="lead">
 
     @b4.form(routes.Application.search) {
-      @b4.text( pFormSearchGeneral("searchTerm"), '_hiddenLabel  -> "Kata Kunci", 'placeholder -> "Ketik pencarian anda di sini - misal : ekonomi" )
-      @b4.submit('class -> "btn btn-lg btn-secondary"){ Cari Data}
+        @b4.text( pFormSearchGeneral("searchTerm"), '_hiddenLabel -> pConfigHelper.getTranslation("search.label.keyword"), 'placeholder -> pConfigHelper.getTranslation("search.placeholder.keyword") )
+        @b4.submit('class -> "btn btn-lg btn-secondary"){ @pConfigHelper.getTranslation("search.button.submit")}
     }
 
     </p>
 
-      <h2>Hasil Pencarian</h2>
+      <h2>@pConfigHelper.getTranslation("result.subheader")</h2>
 
       <div class="table-responsive">
 
@@ -38,7 +39,7 @@
                       }
 
                       <td>
-                          <a href="#" class="href-button-exportcsv" param="@pSearchResultJSON.toString()">Export CSV</a>
+                          <a href="#" class="href-button-exportcsv" param="@pSearchResultJSON.toString()">@pConfigHelper.getTranslation("result.csv")</a>
                       </td>
                   </tr>
                 </tbody>
@@ -50,7 +51,7 @@
                   <table class="table table-striped">
                       <thead>
                           <tr>
-                              <th>Hasil Pencarian : <a href="@tSearchResult.dataPortal.url">@tSearchResult.dataPortal.name</a> </th>
+                              <th>@pConfigHelper.getTranslation("result.subheader") : <a href="@tSearchResult.dataPortal.url">@tSearchResult.dataPortal.name</a> </th>
                           </tr>
                       </thead>
                       <tbody>
@@ -59,10 +60,11 @@
                               <tr>
                                   <td>
                                       <p>
-                                          <b>@tDataSet.getTitle</b> <br/> <br/>
-                                          @Html(HtmlFormat.escape(tDataSet.getNotes).toString.replace("\n", "<br />")) <br/> <br/>
-                                          <b>Format :</b> @tDataSet.getResources.head.getFormat | <b>Lisensi :</b> <a href="@tDataSet.getLicenseUrl">@tDataSet.getLicenseId</a> <br/>
-                                          <b>Link :</b> <a href="@tDataSet.getResources.head.getUrl">@tDataSet.getResources.head.getUrl</a>
+                                          <b>@tDataSet.title</b> <br/> <br/>
+                                          @Html(HtmlFormat.escape(tDataSet.description).toString.replace("\n", "<br />")) <br/> <br/>
+                                          <b>@pConfigHelper.getTranslation("result.format") :</b> @if(!tDataSet.format.equalsIgnoreCase("")){ @tDataSet.format } else { - } | <b>@pConfigHelper.getTranslation("result.license") :</b>@tDataSet.license<br/>
+                                          <b>@pConfigHelper.getTranslation("result.link") :</b> <a href=" @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}">
+                                          @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}</a>
                                       </p>
                                   </td>
                               </tr>
