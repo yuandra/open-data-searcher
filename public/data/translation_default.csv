@@ -26,3 +26,4 @@ config.placeholder.config,ID Sheet Config
 config.placeholder.translation,ID Sheet Translation
 config.button.submit,Submit
 config.example,Hello ! <br/> Welcome to the Open Data Searcher Configuration Page ! <br/> In order to make this tool work you will need to enter 4 configurations that refers to a Google spreadsheet sheet. <br/> Please check the help file <a href='https://github.com/yuandra/open-data-searcher/blob/master/README.md'>here</a> for instructions<br/>
+about.github,Fork me on <a href='https://github.com/yuandra/open-data-searcher'>Github</a>
