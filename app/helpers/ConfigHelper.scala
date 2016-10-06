@@ -4,6 +4,7 @@ import com.github.tototoshi.csv.CSVReader
 import model.OpenDataPortal
 import javax.inject.Singleton
 
+
 @Singleton
 class ConfigHelper {
 
@@ -37,9 +38,10 @@ class ConfigHelper {
 
 
   var sOpenDataPortal:List[OpenDataPortal] = null
-  var sConfig:Map[String,String] = null
+  var sConfig:scala.collection.mutable.Map[String,String] = null
   val sTranslationDefault:Map[String,String] = loadTranslationFromFile("translation_default.csv",STATUS_TRANSLATION_LANGUAGE_DEFAULT)
   var sTranslation:Map[String,String] = Map[String,String]()
+  var sTranslationList:Array[String] = null
 
 
   //load the open data portal information from CSV
@@ -58,7 +60,7 @@ class ConfigHelper {
   }
 
   //load the configuration information from CSV
-  def loadConfigFromGoogleSheet(pURL:String):Map[String,String] = {
+  def loadConfigFromGoogleSheet(pURL:String):scala.collection.mutable.Map[String,String] = {
 
     val tConfigMap:scala.collection.mutable.Map[String,String] = scala.collection.mutable.Map[String,String]()
 
@@ -69,7 +71,7 @@ class ConfigHelper {
       tConfigMap.put(tMap.get("Key").mkString,tMap.get("Value").mkString)
     })
 
-    tConfigMap.toMap
+    tConfigMap
   }
 
   //load the translation from google sheets
@@ -103,8 +105,6 @@ class ConfigHelper {
 
   }
 
-
-
   //load the config based on the google sheet URL
   def loadConfig() = {
 
@@ -118,7 +118,7 @@ class ConfigHelper {
       sOpenDataPortal = loadOpenDataPortalFromGoogleSheet(CONFIG_DATA_PORTAL_SHEET_URL)
       sConfig = loadConfigFromGoogleSheet(CONFIG_SHEET_URL)
       loadConfigGlobal
-      sTranslation = loadTranslationFromGoogleSheet(CONFIG_TRANSLATION_SHEET_URL,CONFIG_TRANSLATION_LANGUAGE)
+      loadTranslation
       CONFIG_STATUS = STATUS_CONFIG_OK
     }
     else {
@@ -128,10 +128,20 @@ class ConfigHelper {
 
   }
 
+  def setConfig(pKey:String,pValue:String) = {
+    sConfig(pKey) = pValue
+  }
+
   //load global config
   def loadConfigGlobal() = {
     CONFIG_TRANSLATION_LANGUAGE = sConfig.get("language").mkString
     CONFIG_MAX_DATA_SEARCH = sConfig.get("max_data_search").mkString.toInt
+  }
+
+  //load translation
+  def loadTranslation() = {
+    sTranslationList = sConfig.get("language_list").mkString.split(";")
+    sTranslation = loadTranslationFromGoogleSheet(CONFIG_TRANSLATION_SHEET_URL,CONFIG_TRANSLATION_LANGUAGE)
   }
 
   //get a translation key

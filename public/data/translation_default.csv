@@ -8,7 +8,7 @@ search.placeholder.keyword,Put your search term in here. Example : economy
 search.label.keyword,Keywords
 search.button.submit,Search Data
 about.header,Open Data Portal Searcher
-about.text,This tool is a proof-of-concept search engine for open data portals in Indonesia. This tool is created with the support of School of Data Member Support Program
+about.text,There is a lot of open data portals in the world and if we want to look for data we have to go to those sites one by one and look individually. <br/> This tool is a proof-of-concept open data portal searcher web application for open data portals in Indonesia that aims to create a simple and lightweight interface that can search all open data portals using their APIs.<br/> In doing so it want to help encourage people in learning how to work with data by enabling them to easily find the data that they wanted from various open data portals.<br/>This tool is created with the support of <a href='http://schoolofdata.org'>School of Data</a> <br/> <img src='assets/images/logo_scoda.png'>
 result.header,Find Your Data
 result.subheader,Search Result
 result.csv,Export CSV
@@ -25,4 +25,4 @@ config.placeholder.dataportal,ID Sheet Data Portal (put 0 if first sheet)
 config.placeholder.config,ID Sheet Config
 config.placeholder.translation,ID Sheet Translation
 config.button.submit,Submit
-config.example,Example config file : <br/> https://docs.google.com/spreadsheets/d/1zNaURLb8kMeia0T5ywGPPAfrvQuaq6qgGpX1VNdzBGE/export?format=csv
+config.example,Example config file :  Hello ! <br/> Welcome to the Open Data Searcher Configuration Page ! <br/> In order to make this tool work you will need to enter 4 configurations that refers to a Google spreadsheet sheet. <br/> Please check the help file <a href='https://github.com/yuandra/open-data-searcher/blob/master/README.md'>here</a> for instructions<br/>

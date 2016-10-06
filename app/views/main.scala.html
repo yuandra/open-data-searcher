@@ -37,7 +37,16 @@
         @content
 
 
-
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">
+                    |
+                    @for(tListLanguage <- pConfigHelper.sTranslationList) {
+                        <a href='@routes.LanguageController.setLanguage(tListLanguage)'>
+                            @pConfigHelper.getTranslation("lang."+tListLanguage)</a> |
+                    }
+            </div>
+        </footer>
 
     </body>
 </html>

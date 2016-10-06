@@ -56,19 +56,21 @@
                       </thead>
                       <tbody>
 
-                          @for(tDataSet <- tSearchResult.searchList) {
-                              <tr>
-                                  <td>
-                                      <p>
-                                          <b>@tDataSet.title</b> <br/> <br/>
-                                          @Html(HtmlFormat.escape(tDataSet.description).toString.replace("\n", "<br />")) <br/> <br/>
-                                          <b>@pConfigHelper.getTranslation("result.format") :</b> @if(!tDataSet.format.equalsIgnoreCase("")){ @tDataSet.format } else { - } | <b>@pConfigHelper.getTranslation("result.license") :</b>@tDataSet.license<br/>
-                                          <b>@pConfigHelper.getTranslation("result.link") :</b> <a href=" @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}">
-                                          @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}</a>
-                                      </p>
-                                  </td>
-                              </tr>
-                          }
+
+                                  @for(tDataSet <- tSearchResult.searchList) {
+                                      <tr>
+                                          <td>
+                                              <p>
+                                                  <b>@tDataSet.title</b> <br/> <br/>
+                                                  @Html(HtmlFormat.escape(tDataSet.description).toString.replace("\n", "<br />")) <br/> <br/>
+                                                  <b>@pConfigHelper.getTranslation("result.format") :</b> @if(!tDataSet.format.equalsIgnoreCase("")){ @tDataSet.format } else { - } | <b>@pConfigHelper.getTranslation("result.license") :</b>@tDataSet.license<br/>
+                                                  <b>@pConfigHelper.getTranslation("result.link") :</b> <a href=" @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}">
+                                                  @if(!tDataSet.link.equalsIgnoreCase("")){ @tDataSet.link } else {-}</a>
+                                              </p>
+                                          </td>
+                                      </tr>
+                                  }
+
 
 
 

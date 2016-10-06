@@ -3,7 +3,7 @@ package helpers
 import javax.inject.Inject
 import javax.inject.Singleton
 
-import eu.trentorise.opendata.jackan.CkanClient
+import eu.trentorise.opendata.jackan.{CkanClient, SearchResults}
 import eu.trentorise.opendata.jackan.model.{CkanDataset, CkanResource}
 
 import scala.collection.JavaConversions._
@@ -27,22 +27,25 @@ class SearchHelper @Inject() (configHelper: ConfigHelper) {
     )
   }
 
+  //convert search result to JSON
   def convertSearchResultToJSON(pListSearchResult:List[SearchResult]):JsValue = {
 
     val tListSearchResultJSON:scala.collection.mutable.ArrayBuffer[SearchResultJSON] = new scala.collection.mutable.ArrayBuffer[SearchResultJSON]()
 
     for (tSearchResult <- pListSearchResult) {
 
-      for(tDataset <- tSearchResult.searchList) {
+      if(tSearchResult!=null) {
+        for (tDataset <- tSearchResult.searchList) {
 
-        val tTitle = tDataset.title
-        val tNotes = tDataset.description
-        val tLicense = tDataset.license
-        var tURL = tDataset.link
-        var tFormat = tDataset.format
+          val tTitle = tDataset.title
+          val tNotes = tDataset.description
+          val tLicense = tDataset.license
+          var tURL = tDataset.link
+          var tFormat = tDataset.format
 
-        val tSearchResultJSON = SearchResultJSON(tSearchResult.dataPortal.name,tTitle,tNotes,tFormat,tLicense,tURL)
-        tListSearchResultJSON.append(tSearchResultJSON)
+          val tSearchResultJSON = SearchResultJSON(tSearchResult.dataPortal.name, tTitle, tNotes, tFormat, tLicense, tURL)
+          tListSearchResultJSON.append(tSearchResultJSON)
+        }
       }
 
     }
@@ -53,63 +56,80 @@ class SearchHelper @Inject() (configHelper: ConfigHelper) {
 
   }
 
+  //main entry point for search open data portals
   def searchOpenDataPortals(pQuery:String, pLimit:Int = 10, pOffset:Int = 0) :List[SearchResult] = {
 
-    val tListCkanDataset:scala.collection.mutable.ArrayBuffer[SearchResult] = new scala.collection.mutable.ArrayBuffer[SearchResult]()
+    val tListDataset:scala.collection.mutable.ArrayBuffer[SearchResult] = new scala.collection.mutable.ArrayBuffer[SearchResult]()
 
     //iterate through the open data portal
     configHelper.sOpenDataPortal.foreach(tOpenDataPortal => {
 
-      if(tOpenDataPortal.status == configHelper.STATUS_OPEN_DATA_PORTAL_OK && tOpenDataPortal.typePortal == "CKAN") {
-        //status ok & ckan (parse using CKAN parser)
+      if(tOpenDataPortal.status == configHelper.STATUS_OPEN_DATA_PORTAL_OK) {
+        //status ok
+        if(tOpenDataPortal.typePortal == "CKAN") {
+          // is ckan (parse using CKAN parser)
 
-        val tListDataset = SearchOpenDataPortal(pQuery,tOpenDataPortal,pLimit,pOffset)
-
-        tListCkanDataset.append(tListDataset)
+          var tListResult = SearchOpenDataPortalCKAN(pQuery, tOpenDataPortal, pLimit, pOffset)
+          if(tListResult==null)
+          {
+            tListResult = SearchResult(tOpenDataPortal,configHelper.STATUS_SEARCH_OK,0,List[Dataset]())
+          }
+          tListDataset.append(tListResult)
+        }
 
       }
 
     })
 
-    tListCkanDataset.toList
+    tListDataset.toList
 
   }
 
-  def SearchOpenDataPortal(pQuery:String,pOpenDataPortal:OpenDataPortal,pLimit:Int=10,pOffset:Int=0):SearchResult = {
+  //open data portal CKAN client
+  def SearchOpenDataPortalCKAN(pQuery:String,pOpenDataPortal:OpenDataPortal,pLimit:Int=10,pOffset:Int=0):SearchResult = {
 
     val tCkanClient = new CkanClient(pOpenDataPortal.url)
-    val tResults =  tCkanClient.searchDatasets(pQuery,pLimit,pOffset)
+    var tResults:SearchResults[CkanDataset] = null
+    var tSearchResult:SearchResult = null
 
-    val tListDataset:ListBuffer[Dataset] = ListBuffer[Dataset]()
+    try {
+      val tListDataset:ListBuffer[Dataset] = ListBuffer[Dataset]()
 
-    for(tResult:CkanDataset <- tResults.getResults) {
+      tResults = tCkanClient.searchDatasets(pQuery,pLimit,pOffset)
 
-      val tTitle = tResult.getTitle
-      val tNotes = tResult.getNotes
-      val tLicense = tResult.getLicenseId
-      var tURL = ""
-      var tFormat = ""
+      for(tResult:CkanDataset <- tResults.getResults) {
 
-      if(!tResult.getResources.isEmpty) {
-        tURL = tResult.getResources.head.getUrl
-        tFormat = tResult.getResources.head.getFormat
+        val tTitle = tResult.getTitle
+        val tNotes = tResult.getNotes
+        val tLicense = tResult.getLicenseId
+        var tURL = ""
+        var tFormat = ""
+
+        if(!tResult.getResources.isEmpty) {
+          tURL = tResult.getResources.head.getUrl
+          tFormat = tResult.getResources.head.getFormat
+        }
+        else {
+          tURL = ""
+          tFormat = ""
+        }
+
+        val tDataset:Dataset = Dataset(tTitle,tNotes,tFormat,tLicense,tURL)
+
+        tListDataset.append(tDataset)
+
       }
-      else {
-        tURL = ""
-        tFormat = ""
-      }
 
-      val tDataset:Dataset = Dataset(tTitle,tNotes,tFormat,tLicense,tURL)
+     tSearchResult = SearchResult(pOpenDataPortal,configHelper.STATUS_SEARCH_OK,tResults.getCount,tListDataset.toList)
 
-      tListDataset.append(tDataset)
-
+      tSearchResult
     }
-
-    val tSearchResult:SearchResult = SearchResult(pOpenDataPortal,configHelper.STATUS_SEARCH_OK,tResults.getCount,tListDataset.toList)
-
-    tSearchResult
-
-
+    catch {
+      case _: Throwable => tSearchResult
+    }
+    finally {
+      tSearchResult
+    }
 
   }
 

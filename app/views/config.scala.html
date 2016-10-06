@@ -4,16 +4,24 @@
 
 @(pFormConfiguration:Form[FormConfiguration], pConfigHelper:ConfigHelper)(implicit messages:Messages)
 
-@main(pConfigHelper.getTranslation("main.title"),pConfigHelper) {
+@config_main(pConfigHelper.getTranslation("main.title"),pConfigHelper) {
 
   <div class="container">
 
     <div class="starter-template">
       <h1>@Html(pConfigHelper.getTranslation("config.header"))</h1>
 
+
       <p class="lead">
 
         @Html(pConfigHelper.getTranslation("config.example"))
+
+      </p>
+
+
+
+
+      <p class="lead">
 
         @b4.form(routes.ConfigController.updateConfigForm) {
 
@@ -24,10 +32,10 @@
           @b4.text( pFormConfiguration("dataPortalSheetID"), '_hiddenLabel  -> pConfigHelper.getTranslation("config.label.dataportal"), if(pConfigHelper.CONFIG_DATA_PORTAL_SHEET_ID!=pConfigHelper.STATUS_URL_NOT_OK) { 'placeholder -> pConfigHelper.CONFIG_DATA_PORTAL_SHEET_ID } else { 'placeholder -> pConfigHelper.getTranslation("config.placeholder.dataportal")})
 
           @pConfigHelper.getTranslation("config.label.config")
-          @b4.text( pFormConfiguration("configSheetID"), '_hiddenLabel  -> pConfigHelper.getTranslation("config.label.config"), if(pConfigHelper.CONFIG_SHEET_ID!=pConfigHelper.STATUS_URL_NOT_OK) { 'placeholder -> pConfigHelper.CONFIG_SHEET_ID } else { 'placeholder -> pConfigHelper.getTranslation("config.placeholder.dataportal") })
+          @b4.text( pFormConfiguration("configSheetID"), '_hiddenLabel  -> pConfigHelper.getTranslation("config.label.config"), if(pConfigHelper.CONFIG_SHEET_ID!=pConfigHelper.STATUS_URL_NOT_OK) { 'placeholder -> pConfigHelper.CONFIG_SHEET_ID } else { 'placeholder -> pConfigHelper.getTranslation("config.placeholder.config") })
 
           @pConfigHelper.getTranslation("config.label.translation")
-          @b4.text( pFormConfiguration("translationSheetID"), '_hiddenLabel  -> pConfigHelper.getTranslation("config.label.translation"), if(pConfigHelper.CONFIG_TRANSLATION_SHEET_ID!=pConfigHelper.STATUS_URL_NOT_OK) { 'placeholder -> pConfigHelper.CONFIG_TRANSLATION_SHEET_ID } else { 'placeholder -> pConfigHelper.getTranslation("config.placeholder.dataportal") })
+          @b4.text( pFormConfiguration("translationSheetID"), '_hiddenLabel  -> pConfigHelper.getTranslation("config.label.translation"), if(pConfigHelper.CONFIG_TRANSLATION_SHEET_ID!=pConfigHelper.STATUS_URL_NOT_OK) { 'placeholder -> pConfigHelper.CONFIG_TRANSLATION_SHEET_ID } else { 'placeholder -> pConfigHelper.getTranslation("config.placeholder.translation") })
           @b4.submit('class -> "btn btn-lg btn-secondary"){ @pConfigHelper.getTranslation("config.button.submit")}
       }
 

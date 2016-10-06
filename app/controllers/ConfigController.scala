@@ -58,4 +58,10 @@ class ConfigController @Inject() (val messagesApi: MessagesApi,configHelper: Con
 
   }
 
+  def loadConfigForm = Action {
+    configHelper.loadConfig()
+
+    Redirect(routes.Application.index())
+  }
+
 }

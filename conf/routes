@@ -10,6 +10,10 @@ POST    /                           controllers.Application.search
 # Config
 GET     /config                     controllers.ConfigController.showConfigForm
 POST    /config/update              controllers.ConfigController.updateConfigForm
+GET     /config/load                controllers.ConfigController.loadConfigForm
+
+# Language
+GET     /language/:pLanguage        controllers.LanguageController.setLanguage(pLanguage)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
