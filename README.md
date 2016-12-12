@@ -6,6 +6,15 @@ There is a lot of open data portals in the world and if we want to look for data
 This application aims to create a simple and lightweight interface that can search all open data portals using their APIs.  
 In doing so, it want to help encourage people in learning how to work with data by enabling them to easily find the data that they wanted from various open data portals.  
 
+Five steps to use the app :
+
+- Make a copy of the app code via Github, a free platform for hosting open source code.
+- Make a copy of the configuration Google Sheets and put their own list of data portals there, including their preferred language
+- Deploy and run the app in just one click by leveraging Heroku’s free app tier
+- Copy and paste the link of the Google Sheets to the app
+- Voilà ! You have your own open data portal searcher up and running :)
+
+
 ## Currently supported open data portals :
 - CKAN
 
