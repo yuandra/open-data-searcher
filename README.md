@@ -26,7 +26,7 @@ This project is supported by the [School of Data](http://schoolofdata.org) Membe
 
 You only need set up two things to easily set up your own open data searcher website :
 - Set up your configurations using a Google Sheet to manage which data portals to search and languages of the open data searcher website.
-- Run your website on Heroku (a service where you can run web based applications) by clicking on the Heroku button below. You will need to create a free account and you can just use the free tier version of Heroku (no need to pay anything!) 
+- Run your website on Heroku (a service where you can run web based applications) by clicking on the Heroku button below. You will need to create a free account and you can just use the free tier version of Heroku (no need to pay anything) for trial & prototyping. If you want to deploy it full time then you can switch to the paid tier. 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
