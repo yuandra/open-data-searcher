@@ -14,6 +14,10 @@ Five steps to use the app :
 - Copy and paste the link of the Google Sheets to the app
 - Voilà ! You have your own open data portal searcher up and running :)
 
+## Credits
+
+This project is supported by the [School of Data](http://schoolofdata.org) Member Support Programme and Coordination Team
+![SchoolOfDataLogo](public/images/logo_scoda_new.png?raw=true)  
 
 ## Currently supported open data portals :
 - CKAN
@@ -95,10 +99,6 @@ Submit your contributions such as bug fixes, feature updates, and adding new par
 
 - 2016/08/09 - 0.1 - Initial Commit
 - 2016/10/06 - 0.2 - switching configurations to Google Sheets, add multiple language translation and modularity
-
-## Credits
-
-This project is supported by the [School of Data](http://schoolofdata.org)
 
 ## License
 
